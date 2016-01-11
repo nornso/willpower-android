@@ -1,0 +1,56 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Willpower</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- 抽屉导航栏-->
+    <string name="task_list">任务清单</string>
+    <string name="task_manage">项目管理</string>
+    <string name="time_statistics">时间统计</string>
+    <string name="about_willpower">关于</string>
+    <string name="nav_settings">设置</string>
+    <!--activity 标题-->
+    <string name="title_activity_manage">项目管理</string>
+    <string name="title_activity_base">BaseActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_project_settings">主题设置</string>
+
+    <string name="color_picker_default_title">"选择颜色"</string>
+
+    <string name="color_swatch_description">
+        "颜色<xliff:g id="COLOR_INDEX">%1$d</xliff:g>"</string>
+
+
+    <string name="color_swatch_description_selected">
+        "已选择颜色<xliff:g id="COLOR_INDEX">%1$d</xliff:g>"</string>
+
+    <string name="alarm_time_12_hours_format" translatable="false">h&#58;mm&#8202;<b><font face="sans-serif" size="24">a</font></b></string>
+
+    <string name="clock_24_hours_format" translatable="false">kk&#58;mm</string>
+
+
+    <string name="never" msgid="54104287800571769">"永不"</string>
+
+    <string name="every_day" msgid="4100909974923444602">"每天"</string>
+
+    <string name="day_concat" msgid="971998564991636532">", "</string>
+    <string name="ic_confirm">保存</string>
+
+
+    <!--选择器颜色-->
+    <string-array name="default_color_choice_values" translatable="false">
+        <item>#33b5e5</item>
+        <item>#aa66cc</item>
+        <item>#99cc00</item>
+        <item>#ffbb33</item>
+        <item>#ff4444</item>
+        <item>#0099cc</item>
+        <item>#9933cc</item>
+        <item>#669900</item>
+        <item>#ff8800</item>
+        <item>#cc0000</item>
+    </string-array>
+
+
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorGray">#607D8B</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorSubTitle">#CECECE</color>
+    <color name="colorBackGround">#E8E8E8</color>
+    <color name="colorButtonBackGray">#D6D7D7</color>
+    <color name="colorButtonFontGray">#767676</color>
+    <color name="colorButtonFontGray1">#BDBDBD</color>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <color name="time_picker_gray">#212121</color>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/menu_group_1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/task_list"
+
+            android:title="@string/task_list" />
+        <item
+            android:id="@+id/nav_manage"
+
+            android:title="@string/task_manage" />
+        <item
+            android:id="@+id/time_statistics"
+
+            android:title="@string/time_statistics" />
+
+    </group>
+
+    <group android:id="@+id/menu_group_2"
+        android:checkableBehavior="single">
+    <item
+        android:id="@+id/nav_settings"
+
+        android:title="@string/nav_settings" />
+    <item
+        android:id="@+id/about_willpower"
+
+        android:title="@string/about_willpower" />
+    </group>
+
+</menu>

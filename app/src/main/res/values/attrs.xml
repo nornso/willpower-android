@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="fitsSystemWindows">true</bool>
+    <string name="fab_view">gone</string>
+
+    <!-- 颜色选择器-->
+    <declare-styleable name="CircleView">
+        <attr name="viewColor" format="color" />
+    </declare-styleable>
+
+    <!--闹钟时间-->
+    <declare-styleable name="TextTime">
+        <attr name="format12Hour" format="string" />
+        <attr name="format24Hour" format="string" />
+    </declare-styleable>
+</resources>
