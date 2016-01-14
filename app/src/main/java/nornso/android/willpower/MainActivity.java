@@ -1,9 +1,13 @@
 package nornso.android.willpower;
 
+import android.app.LoaderManager;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,10 +17,11 @@ import java.util.List;
 import nornso.android.willpower.adapter.ProjectItemAdapter;
 import nornso.android.willpower.adapter.Project;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private RecyclerView mRecyclerView;
     private ProjectItemAdapter adapter;
     private DrawerLayout mDrawerLayout;
+    private Loader mCursorLoader;
 
     private int mSelectedId;
     private static final String SELECTED_ITEM_ID = "selected_item_id";
@@ -26,28 +31,15 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mCursorLoader = getLoaderManager().initLoader(0, null, this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_card);
-        adapter = new ProjectItemAdapter(this, getData());
+        adapter = new ProjectItemAdapter(this);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
     }
 
-    public static List<Project> getData() {
-        String[] titles1 = {"吃饭", "睡觉", "打豆豆", "学习", "喝水"};
-        String[] titles2 = {"喝水", "吃饭", "睡觉", "打豆豆", "学习"};
-        String[] id = {"titles3a1","titles3a2","titles3a2","titles3a3","titles3a5"};
-        List<Project> data = new ArrayList<>();
-        for (int i = 0; i < titles1.length; i++) {
-            Project current = new Project();
-            current.title1 = titles1[i];
-            current.title2 = titles2[i];
-            current.id = id[i];
-            data.add(current);
-        }
-        return data;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -64,8 +56,9 @@ public class MainActivity extends BaseActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        switch (id){
-            case R.id.task_list:return true;
+        switch (id) {
+            case R.id.task_list:
+                return true;
 
 
         }
@@ -73,4 +66,19 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    @Override
+    public Loader onCreateLoader(int id, Bundle args) {
+        return Project.getProjectCursorLoader(this);
+    }
+
+    @Override
+    public void onLoadFinished(Loader loader, Cursor data) {
+        adapter.swapCursor(data);
+        Log.d("ddddddddddddddddddd", String.valueOf(data.moveToFirst()));
+    }
+
+    @Override
+    public void onLoaderReset(Loader loader) {
+        adapter.swapCursor(null);
+    }
 }

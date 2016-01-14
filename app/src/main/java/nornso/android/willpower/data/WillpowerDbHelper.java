@@ -21,7 +21,7 @@ public class WillpowerDbHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + ProjectEntry.TABLE_NAME + " (" +
                         ProjectEntry._ID + " INTEGER PRIMARY KEY," +
                         ProjectEntry.COLUMN_PROJECT_NAME + " TEXT NOT NULL, " +
-                        ProjectEntry.COLUMN_COLOR + " TEXT NOT NULL, " +
+                        ProjectEntry.COLUMN_COLOR + " INTEGER NOT NULL, " +
                         ProjectEntry.COLUMN_CREATE_TIME + " INTEGER UNIQUE NOT NULL); "
         );
     }

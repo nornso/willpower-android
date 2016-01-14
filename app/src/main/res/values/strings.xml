@@ -40,16 +40,16 @@
 
     <!--选择器颜色-->
     <string-array name="default_color_choice_values" translatable="false">
-        <item>#33b5e5</item>
-        <item>#aa66cc</item>
-        <item>#99cc00</item>
-        <item>#ffbb33</item>
-        <item>#ff4444</item>
-        <item>#0099cc</item>
-        <item>#9933cc</item>
-        <item>#669900</item>
-        <item>#ff8800</item>
-        <item>#cc0000</item>
+        <item>#C18E18</item>
+        <item>#A20006</item>
+        <item>#4F006B</item>
+        <item>#A73E3E</item>
+        <item>#006BA5</item>
+        <item>#00A56E</item>
+        <item>#607D8D</item>
+        <item>#EF78A2</item>
+        <item>#4C3827</item>
+        <item>#3DA9C7</item>
     </string-array>
 
 

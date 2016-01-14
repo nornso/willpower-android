@@ -7,10 +7,8 @@ import android.content.Context;
 import android.content.CursorLoader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.net.UrlQuerySanitizer;
 import android.util.Log;
 
-import nornso.android.willpower.data.WillpowerContact;
 import nornso.android.willpower.data.WillpowerContact.AlarmEntry;
 
 /**
@@ -34,7 +32,7 @@ public class Alarm {
     };
 
     private static final int ID_INDEX = 0;
-    private static final int CREATE_TIME_IDNEX = 1;
+    private static final int CREATE_TIME_INDEX = 1;
     private static final int HOUR_INDEX = 2;
     private static final int MINUTES_INDEX = 3;
     private static final int DAYS_OF_WEEK_INDEX = 4;
@@ -48,9 +46,8 @@ public class Alarm {
     public long id;
     public int hour;
     public int minutes;
-    public int daysofweek;
     public boolean enabled;
-    public DaysOfWeek daysOfWeek = new DaysOfWeek(daysofweek);
+    public DaysOfWeek daysOfWeek;
 
 
     public Alarm() {
@@ -59,7 +56,7 @@ public class Alarm {
 
     public Alarm(Cursor c) {
         id = c.getLong(ID_INDEX);
-        createTime = c.getLong(CREATE_TIME_IDNEX);
+        createTime = c.getLong(CREATE_TIME_INDEX);
         hour = c.getInt(HOUR_INDEX);
         minutes = c.getInt(MINUTES_INDEX);
         daysOfWeek = new DaysOfWeek(c.getInt(DAYS_OF_WEEK_INDEX));
@@ -98,6 +95,21 @@ public class Alarm {
 
         Log.d("Alarm_id_uri", String.valueOf(AlarmEntry.buildAlarmUri(alarmId)));
         return deletedRows == 1;
+    }
+
+    public static boolean updateAlarm(ContentResolver contentResolver, Alarm alarm) {
+        if (alarm.id == Alarm.INVALID_ID) return false;
+        ContentValues values = createContentValues(alarm);
+        long rowsUpdated = contentResolver.update(AlarmEntry.buildAlarmUri(alarm.id), values, null, null);
+        return rowsUpdated == 1;
+    }
+
+    public static boolean deleteAlarmByCreateTime(ContentResolver contentResolver, long createTime) {
+        String selection = AlarmEntry.COLUMN_CREATE_TIME + "=" + createTime;
+        int deletedRows = contentResolver.delete(AlarmEntry.CONTENT_URI, selection, null);
+
+
+        return deletedRows >= 1;
     }
 
 

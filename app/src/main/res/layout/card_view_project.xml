@@ -10,7 +10,8 @@
     card_view:cardBackgroundColor="@color/colorGray"
     card_view:cardCornerRadius="4dp"
     card_view:cardPreventCornerOverlap="false"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardUseCompatPadding="true"
+    android:id="@+id/project_card_view">
 
     <RelativeLayout
         android:layout_width="wrap_content"

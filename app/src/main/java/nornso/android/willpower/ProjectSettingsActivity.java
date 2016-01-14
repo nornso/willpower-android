@@ -6,14 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.app.LoaderManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ActionMenuView;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -32,12 +30,8 @@ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.text.DateFormatSymbols;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
-import java.util.TimeZone;
 
 import android.content.Loader;
 
@@ -46,7 +40,7 @@ import nornso.android.willpower.adapter.Alarm;
 import nornso.android.willpower.adapter.CursorRecyclerViewAdapter;
 import nornso.android.willpower.adapter.MyLinearLayoutManager;
 import nornso.android.willpower.adapter.DaysOfWeek;
-import nornso.android.willpower.data.WillpowerContact;
+import nornso.android.willpower.adapter.Project;
 import nornso.android.willpower.data.WillpowerContact.ProjectEntry;
 import nornso.android.willpower.utils.ColorUtils;
 import nornso.android.willpower.utils.Utils;
@@ -154,21 +148,6 @@ public class ProjectSettingsActivity extends AppCompatActivity
     }
 
 
-    public static List<Alarm> getData() {
-        Integer[] hour = {10, 12, 14};
-        Integer[] minutes = {23, 45, 2};
-        Integer[] daysofweek = {23, 12, 41};
-        List<Alarm> data = new ArrayList<>();
-        for (int i = 0; i < hour.length; i++) {
-            Alarm alarm = new Alarm();
-            alarm.hour = hour[i];
-            alarm.minutes = minutes[i];
-            alarm.daysofweek = daysofweek[i];
-            data.add(alarm);
-        }
-        return data;
-    }
-
     //监听主题栏是否有字符来切换MenuItem状态
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
@@ -197,7 +176,10 @@ public class ProjectSettingsActivity extends AppCompatActivity
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.button_save:
-                System.out.println(mProjectCreateTime);
+                Project project = new Project(mProjectTitle.getText().toString(),mCircleColorView.getCircleColor(),mProjectCreateTime);
+                Log.d("PPPPPPPPPPPPPPP",mProjectTitle.getText().toString()+mCircleColorView.getCircleColor()+mProjectCreateTime);
+                asyncAddProject(project);
+                onBackPressed();
                 break;
             case R.id.button_not_save:
                 Snackbar.make(mSaveMenuItem, "主题名称不能为空", Snackbar.LENGTH_SHORT)
@@ -211,7 +193,8 @@ public class ProjectSettingsActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home)
-            onBackPressed();
+            asynDeleteAlarmByCreateTime();
+        onBackPressed();
         return super.onOptionsItemSelected(item);
     }
 
@@ -253,10 +236,30 @@ public class ProjectSettingsActivity extends AppCompatActivity
         } else {
             mSelectedAlarm.hour = hourOfDay;
             mSelectedAlarm.minutes = minute;
+            asyncUpdateAlarm(mSelectedAlarm);
             mSelectedAlarm = null;
         }
 
     }
+
+    private void asyncAddProject(final Project project) {
+        final Context context = this.getApplicationContext();
+
+        final AsyncTask<Void, Void, Void> updateTask =
+                new AsyncTask<Void, Void, Void>() {
+
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        ContentResolver cr = context.getContentResolver();
+
+                        Project.addProject(cr, project);
+
+                        return null;
+                    }
+                };
+        updateTask.execute();
+    }
+
 
     private void asyncAddAlarm(final Alarm alarm) {
         final Context context = this.getApplicationContext();
@@ -284,9 +287,38 @@ public class ProjectSettingsActivity extends AppCompatActivity
                     @Override
                     protected Void doInBackground(Void... params) {
                         ContentResolver cr = context.getContentResolver();
-                        Log.d("Alarm_id_uri", String.valueOf(WillpowerContact.AlarmEntry.buildAlarmUri(alarm.id)));
-                        Log.d("Alarm_uri", String.valueOf(WillpowerContact.AlarmEntry.CONTENT_URI));
+
                         Alarm.deleteAlarm(cr, alarm.id);
+                        return null;
+                    }
+                };
+        deleteTask.execute();
+    }
+
+    private void asyncUpdateAlarm(final Alarm alarm) {
+        final Context context = this.getApplicationContext();
+        final AsyncTask<Void, Void, Void> deleteTask =
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        ContentResolver cr = context.getContentResolver();
+
+                        Alarm.updateAlarm(cr, alarm);
+                        return null;
+                    }
+                };
+        deleteTask.execute();
+    }
+
+    private void asynDeleteAlarmByCreateTime() {
+        final Context context = this.getApplicationContext();
+        final AsyncTask<Void, Void, Void> deleteTask =
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        ContentResolver cr = context.getContentResolver();
+
+                        Alarm.deleteAlarmByCreateTime(cr, mProjectCreateTime);
                         return null;
                     }
                 };
@@ -296,18 +328,19 @@ public class ProjectSettingsActivity extends AppCompatActivity
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return Alarm.getAlarmsCursorLoader(this, mProjectCreateTime);
-
     }
 
     @Override
-    public void onLoadFinished(android.content.Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
     }
 
     @Override
-    public void onLoaderReset(android.content.Loader<Cursor> loader) {
+    public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
     }
+
+
 
 
     /**
@@ -418,7 +451,7 @@ public class ProjectSettingsActivity extends AppCompatActivity
                         } else {
                             turnOffDayOfWeek(holder, buttonIndex);
                         }
-                        //                    asyncUpdateAlarm(alarm, false);
+                        asyncUpdateAlarm(alarm);
                     }
                 });
             }

@@ -14,9 +14,11 @@ public class WillpowerProvider extends ContentProvider {
     private WillpowerDbHelper mOpenHelper;
 
     static final int PROJECT = 100;
-    static final int ALARM = 101;
-    static final int ALARM_ID = 102;
-    static final int ALARM_WITH_CREATE_TIME = 103;
+    static final int PROJECT_ID = 101;
+
+    static final int ALARM = 200;
+    static final int ALARM_ID = 201;
+    static final int ALARM_WITH_CREATE_TIME = 202;
 
     static UriMatcher buildUriMatcher() {
 
@@ -160,6 +162,7 @@ public class WillpowerProvider extends ContentProvider {
                       String[] selectionArgs) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         int rowsUpdated;
+        String alarmId;
 
         switch (sUriMatcher.match(uri)) {
             case PROJECT:
@@ -169,6 +172,11 @@ public class WillpowerProvider extends ContentProvider {
             case ALARM:
                 rowsUpdated = db.update(WillpowerContact.AlarmEntry.TABLE_NAME, values, selection,
                         selectionArgs);
+                break;
+            case ALARM_ID:
+                alarmId=uri.getLastPathSegment();
+                rowsUpdated = db.update(WillpowerContact.AlarmEntry.TABLE_NAME,values,
+                        WillpowerContact.AlarmEntry._ID+ "=" + alarmId,null );
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
