@@ -5,8 +5,9 @@ willpower-android
 
 ---
 
-###已实现功能
+### 已实现功能
 
-
-透明标题栏
+- 透明标题栏
+   <img src="image/transparent status bar1.png" width="40%" />
+   <img src="image/transparent status bar2.png" width="40%" />
 
