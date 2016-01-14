@@ -4,10 +4,10 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,29 +27,68 @@ public class ProjectItemAdapter extends CursorRecyclerViewAdapter<ProjectItemAda
     private LayoutInflater mInflater;
     private Context mContext;
     private static TaskItemAdapter taskItemAdapter;
+    public static final int PROJECT_TYPE = 0;
+    public static final int MANAGE_TYPE = 1;
+    private int mType;
 
 
     List<Project> mData = Collections.emptyList();
     List<Task> tasks = Collections.emptyList();
 
 
-    public ProjectItemAdapter(Context context) {
+    public ProjectItemAdapter(Context context, int type) {
         super(context, null);
         mInflater = LayoutInflater.from(context);
         mContext = context;
+        mType = type;
     }
+
+    public static List<Task> getData(long id) {
+        String[] titles3a1 = {"吃饭1", "睡觉1", "打豆豆1"};
+        String[] titles3a2 = {"吃饭2", "睡觉2", "打豆豆2"};
+        String[] titles3a3 = {"吃饭3", "睡觉3", "打豆豆3"};
+        List<Task> data = new ArrayList<>();
+        String[] titles;
+        switch ((int) (id%3)) {
+            case 1:
+                titles = titles3a1;
+                break;
+            case 2:
+                titles = titles3a2;
+                break;
+            default:
+                titles = titles3a3;
+        }
+        for (int i = 0; i < titles.length; i++) {
+            Task current = new Task();
+            current.title3 = titles[i];
+            data.add(current);
+        }
+        return data;
+    }
+
 
     @Override
     public ProjectItemAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        int layoutID = -1;
+        switch (mType) {
+            case PROJECT_TYPE:
+                layoutID = R.layout.card_view_project;
+                break;
+            case MANAGE_TYPE:
+                layoutID = R.layout.card_view_project_manage;
+                break;
+        }
 
-        View view = mInflater.inflate(R.layout.card_view_project, parent, false);
+
+        View view = mInflater.inflate(layoutID, parent, false);
+
+
+        Log.d("ddddddd", String.valueOf(layoutID));
 
         MyViewHolder holder = new MyViewHolder(view);
-
         MyLinearLayoutManager mLayoutManager = new MyLinearLayoutManager(mContext);
         holder.mChildRecyclerView.setLayoutManager(mLayoutManager);
-
-
         return holder;
     }
 
@@ -60,6 +99,9 @@ public class ProjectItemAdapter extends CursorRecyclerViewAdapter<ProjectItemAda
         viewHolder.projectName.setText(project.projectName);
         viewHolder.projectCardView.setCardBackgroundColor(project.color);
 
+        taskItemAdapter = new TaskItemAdapter(mContext, getData(project.id));
+                viewHolder.mChildRecyclerView.setAdapter(taskItemAdapter);
+        viewHolder.title2.setText("副标题");
     }
 
 
@@ -84,7 +126,7 @@ public class ProjectItemAdapter extends CursorRecyclerViewAdapter<ProjectItemAda
         TextView title2;
         RecyclerView mChildRecyclerView;
         CardView projectCardView;
-        boolean tigger;
+        boolean trigger;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -97,8 +139,8 @@ public class ProjectItemAdapter extends CursorRecyclerViewAdapter<ProjectItemAda
 
         @Override
         public void onClick(View v) {
-            tigger = mChildRecyclerView.getVisibility() == View.GONE ? true : false;
-            if (tigger) {
+            trigger = mChildRecyclerView.getVisibility() == View.GONE ? true : false;
+            if (trigger) {
                 Utils.expand(mChildRecyclerView);
 
             } else {

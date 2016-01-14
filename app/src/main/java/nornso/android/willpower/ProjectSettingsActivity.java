@@ -177,7 +177,6 @@ public class ProjectSettingsActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.button_save:
                 Project project = new Project(mProjectTitle.getText().toString(),mCircleColorView.getCircleColor(),mProjectCreateTime);
-                Log.d("PPPPPPPPPPPPPPP",mProjectTitle.getText().toString()+mCircleColorView.getCircleColor()+mProjectCreateTime);
                 asyncAddProject(project);
                 onBackPressed();
                 break;

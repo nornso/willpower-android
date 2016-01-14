@@ -78,6 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/apptheme_edit_text_holo_light"
+                    android:singleLine="true"
                     android:hint="输入主题名称" />
 
                 <TextView

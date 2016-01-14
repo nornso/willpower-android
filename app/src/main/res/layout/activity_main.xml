@@ -14,25 +14,17 @@
         android:background="@color/colorPrimary"
         android:orientation="vertical"
         android:scaleType="centerCrop"
-        app:layout_collapseMode="parallax">
+        app:layout_collapseMode="parallax"
+        android:elevation="4dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="大标题"
-            android:textSize="48dp" />
+            android:text="倒计时界面"
+            android:textColor="@color/colorWhite"
+            android:textSize="36dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="大标题"
-            android:textSize="48dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="大标题"
-            android:textSize="48dp" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

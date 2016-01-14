@@ -33,7 +33,7 @@ public class MainActivity extends BaseActivity implements LoaderManager.LoaderCa
 
         mCursorLoader = getLoaderManager().initLoader(0, null, this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_card);
-        adapter = new ProjectItemAdapter(this);
+        adapter = new ProjectItemAdapter(this,ProjectItemAdapter.PROJECT_TYPE);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -74,7 +74,6 @@ public class MainActivity extends BaseActivity implements LoaderManager.LoaderCa
     @Override
     public void onLoadFinished(Loader loader, Cursor data) {
         adapter.swapCursor(data);
-        Log.d("ddddddddddddddddddd", String.valueOf(data.moveToFirst()));
     }
 
     @Override
