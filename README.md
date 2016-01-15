@@ -9,32 +9,42 @@ willpower-android
 
 ##### 透明标题栏
 
-   <img src="image/transparent status bar1.png" width="40%" />
-   <img src="image/transparent status bar2.png" width="40%" />
+   <p style="text-align:center">
+    <img src="image/transparent status bar1.png" width="40%" />
+    <img src="image/transparent status bar2.png" width="40%" />
+   </p>
    
 透明标题栏的低版本适配，修复Transparent status bar以及NavigationView的顶部在V21以下可能会变变黑白条的问题
 
 ##### RecyclerView的嵌套使用，以及子RecyclerView的展开
  
+ <p style="text-align:center">
    <img src="image/RecycleView.gif"/>
+ </p>
 
-
+CardView中的子RecyclerView不能正常显示，需要重写LinearLayoutManager
 
 ##### 动态的自定义toolbar
 
-   <img src="image/toolbar.gif"/>
+ <p style="text-align:center">
+  <img src="image/toolbar.gif" /> 
+ </p>
 
 EditText无内容时，保存菜单是灰色，有内容时是白色
 
 ##### ColorPick
 
+<p style="text-align:center">
    <img src="image/colorpick.gif"/>
+</p>
 
 ColorPickerDialog来自google源码<a href="https://android.googlesource.com/platform/frameworks/opt/colorpicker/">colorpick</a>
 
 ##### 主题中的闹钟每周提醒
 
+<p style="text-align:center">
    <img src="image/alarmpick.gif"/>
+</p>
 
 灵感来自于google原生时钟<a href="https://android.googlesource.com/platform/packages/apps/DeskClock/">DeskClock</a>
 
@@ -44,7 +54,7 @@ TimePickerDialog来自于开源框架<a href="https://github.com/wdullaer/Materi
 
 ##### 数据库及ContentProvider
 
-在数据库中添加Project,Alarm表，并在ContentProvider中匹配相应的uri路径
+在数据库中添加Project,Alarm表，并在ContentProvider中匹配相应的uri路径，在androidTest中完成数据库的单元测试
 
 ##### RecyclerViewAdapter中获取Cursor
 
@@ -57,3 +67,4 @@ TimePickerDialog来自于开源框架<a href="https://github.com/wdullaer/Materi
 - Task中的Timer界面。
 - 用Viewpager来展现每日/周/月的时间记录，每次加载5个页面，多余的回收。
 - 一些UI的填充和优化，以及一些细节设置。
+- 桌面小部件
