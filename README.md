@@ -37,7 +37,9 @@ ColorPickerDialog来自google源码<a href="https://android.googlesource.com/pla
    <img src="image/alarmpick.gif"/>
 
 灵感来自于google原生时钟<a href="https://android.googlesource.com/platform/packages/apps/DeskClock/">DeskClock</a>
+
 TimePickerDialog来自于开源框架<a href="https://github.com/wdullaer/MaterialDateTimePicker">MaterialDateTimePicker</a>
+
 自定义了button控件
 
 ##### 数据库及ContentProvider
