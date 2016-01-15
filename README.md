@@ -8,6 +8,50 @@ willpower-android
 ### 已实现功能
 
 - 透明标题栏
+
    <img src="image/transparent status bar1.png" width="40%" />
    <img src="image/transparent status bar2.png" width="40%" />
+   
+透明标题栏的低版本适配，修复Transparent status bar以及NavigationView的顶部在V21以下可能会变变黑白条的问题
 
+- RecyclerView的嵌套使用，以及子RecyclerView的展开
+ 
+<img src="image/RecycleView.gif"/>
+
+
+
+- 动态的自定义toolbar
+
+<img src="image/toolbar.gif"/>
+
+EditText无内容时，保存菜单是灰色，有内容时是白色
+
+- ColorPick
+
+<img src="image/colorpick.gif"/>
+
+ColorPickerDialog来自google源码<a href="https://android.googlesource.com/platform/frameworks/opt/colorpicker/">colorpick</a>
+
+- 主题中的闹钟每周提醒
+
+<img src="image/alarmpick.gif"/>
+
+灵感来自于google原生时钟<a href="https://android.googlesource.com/platform/packages/apps/DeskClock/">DeskClock</a>
+TimePickerDialog来自于开源框架<a href="https://github.com/wdullaer/MaterialDateTimePicker">MaterialDateTimePicker</a>
+自定义了button控件
+
+- 数据库及ContentProvider
+
+在数据库中添加Project,Alarm表，并在ContentProvider中匹配相应的uri路径
+
+- RecyclerViewAdapter中获取Cursor
+
+  在 RecyclerViewAdapter中加入DataSetObserver，并加入swapCursor方法。方便配合LoaderManager来实现view和数据库的交互。
+  
+### 还未完成的功能
+
+- Task设置界面
+- 使用AlarmManager和NotificationManager实现主题的定时提醒功能。
+- Task中的Timer界面。
+- 用Viewpager来展现每日/周/月的时间记录，每次加载5个页面，多余的回收。
+- 一些UI的填充和优化，以及一些细节设置。
