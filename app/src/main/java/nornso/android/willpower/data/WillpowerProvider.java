@@ -34,6 +34,8 @@ public class WillpowerProvider extends ContentProvider {
     }
 
 
+
+
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();

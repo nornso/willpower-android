@@ -16,7 +16,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,7 +61,12 @@ public class ProjectSettingsActivity extends AppCompatActivity
     private ActionMenuView mSaveMenuItem;
     private Button mAddAlarm;
     private Alarm mSelectedAlarm;
+
+
     private long mProjectCreateTime;
+    private String mProjectName;
+    private long mColor;
+
 
     private Toolbar mToolBar;
     private int mSelectedColor = 0;
@@ -75,6 +79,9 @@ public class ProjectSettingsActivity extends AppCompatActivity
 
         Intent intent = this.getIntent();
         mProjectCreateTime = intent.getLongExtra(ProjectEntry.COLUMN_CREATE_TIME, 0);
+        mProjectName = intent.getStringExtra(ProjectEntry.COLUMN_PROJECT_NAME);
+        mColor = intent.getLongExtra(ProjectEntry.COLUMN_COLOR,0);
+
         mCursorLoader = getLoaderManager().initLoader(0, null, this);
 
         initToolBar();
@@ -82,9 +89,16 @@ public class ProjectSettingsActivity extends AppCompatActivity
         //标题EditText
         mProjectTitle = (EditText) findViewById(R.id.project_title);
         mProjectTitle.addTextChangedListener(textWatcher);
+        if (mProjectName != null) {
+            mProjectTitle.setText(mProjectName);
+        }
 
         //颜色选择
         mCircleColorView = (CircleView) findViewById(R.id.color_picker_button);
+        if (mColor != 0) {
+            mCircleColorView.setCircleColor((int) mColor);
+        }
+
         mCircleColorView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,8 +190,8 @@ public class ProjectSettingsActivity extends AppCompatActivity
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.button_save:
-                Project project = new Project(mProjectTitle.getText().toString(),mCircleColorView.getCircleColor(),mProjectCreateTime);
-                asyncAddProject(project);
+                Project project = new Project(mProjectTitle.getText().toString(), mCircleColorView.getCircleColor(), mProjectCreateTime);
+                asyncAddProject(project,mProjectCreateTime);
                 onBackPressed();
                 break;
             case R.id.button_not_save:
@@ -192,7 +206,7 @@ public class ProjectSettingsActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home)
-            asynDeleteAlarmByCreateTime();
+            asyncDeleteAlarmByCreateTime();
         onBackPressed();
         return super.onOptionsItemSelected(item);
     }
@@ -241,7 +255,7 @@ public class ProjectSettingsActivity extends AppCompatActivity
 
     }
 
-    private void asyncAddProject(final Project project) {
+    private void asyncAddProject(final Project project, final long createTime) {
         final Context context = this.getApplicationContext();
 
         final AsyncTask<Void, Void, Void> updateTask =
@@ -251,13 +265,15 @@ public class ProjectSettingsActivity extends AppCompatActivity
                     protected Void doInBackground(Void... params) {
                         ContentResolver cr = context.getContentResolver();
 
-                        Project.addProject(cr, project);
+                        Project.addOrUpdateProject(cr, project,createTime);
 
                         return null;
                     }
                 };
         updateTask.execute();
     }
+
+
 
 
     private void asyncAddAlarm(final Alarm alarm) {
@@ -309,7 +325,7 @@ public class ProjectSettingsActivity extends AppCompatActivity
         deleteTask.execute();
     }
 
-    private void asynDeleteAlarmByCreateTime() {
+    private void asyncDeleteAlarmByCreateTime() {
         final Context context = this.getApplicationContext();
         final AsyncTask<Void, Void, Void> deleteTask =
                 new AsyncTask<Void, Void, Void>() {
@@ -338,8 +354,6 @@ public class ProjectSettingsActivity extends AppCompatActivity
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
     }
-
-
 
 
     /**

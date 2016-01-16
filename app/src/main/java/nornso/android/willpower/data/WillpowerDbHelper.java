@@ -37,6 +37,7 @@ public class WillpowerDbHelper extends SQLiteOpenHelper {
         );
     }
 
+
     public WillpowerDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }

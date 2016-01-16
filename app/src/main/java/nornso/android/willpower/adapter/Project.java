@@ -24,7 +24,7 @@ public class Project {
     private static final int COLOR_INDEX = 2;
     private static final int CREATE_TIME_INDEX = 3;
 
-    private static final int COLUMN_COUNT = CREATE_TIME_INDEX+1;
+    private static final int COLUMN_COUNT = CREATE_TIME_INDEX + 1;
     private static final String[] QUERY_COLUMNS = {
             ProjectEntry._ID,
             ProjectEntry.COLUMN_PROJECT_NAME,
@@ -42,8 +42,7 @@ public class Project {
     public long createTime;
 
 
-
-    public Project(String projectName,int color,long createTime){
+    public Project(String projectName, int color, long createTime) {
         this.projectName = projectName;
         this.color = color;
         this.createTime = createTime;
@@ -67,13 +66,17 @@ public class Project {
     }
 
 
-
-
-
-    public static Project addProject(ContentResolver contentResolver, Project project) {
+    public static Project addOrUpdateProject(ContentResolver contentResolver, Project project, long createTime) {
         ContentValues values = createContentValues(project);
-        Uri uri = contentResolver.insert(ProjectEntry.CONTENT_URI, values);
-        project.id = getId(uri);
+
+        String selection = ProjectEntry.COLUMN_CREATE_TIME + "=" + createTime;
+
+        int rowID = contentResolver.update(ProjectEntry.CONTENT_URI, values, selection, null);
+        if (rowID == 0) {
+            Uri uri = contentResolver.insert(ProjectEntry.CONTENT_URI, values);
+            project.id = getId(uri);
+        }
+
         return project;
     }
 

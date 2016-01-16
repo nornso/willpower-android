@@ -2,9 +2,11 @@ package nornso.android.willpower.adapter;
 
 import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,10 +16,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.TimeZone;
 
+import nornso.android.willpower.ManageActivity;
+import nornso.android.willpower.ProjectSettingsActivity;
 import nornso.android.willpower.R;
+import nornso.android.willpower.data.WillpowerContact;
 import nornso.android.willpower.utils.Utils;
 
 /**
@@ -49,7 +56,7 @@ public class ProjectItemAdapter extends CursorRecyclerViewAdapter<ProjectItemAda
         String[] titles3a3 = {"吃饭3", "睡觉3", "打豆豆3"};
         List<Task> data = new ArrayList<>();
         String[] titles;
-        switch ((int) (id%3)) {
+        switch ((int) (id % 3)) {
             case 1:
                 titles = titles3a1;
                 break;
@@ -100,8 +107,28 @@ public class ProjectItemAdapter extends CursorRecyclerViewAdapter<ProjectItemAda
         viewHolder.projectCardView.setCardBackgroundColor(project.color);
 
         taskItemAdapter = new TaskItemAdapter(mContext, getData(project.id));
-                viewHolder.mChildRecyclerView.setAdapter(taskItemAdapter);
+        viewHolder.mChildRecyclerView.setAdapter(taskItemAdapter);
         viewHolder.title2.setText("副标题");
+
+        if (viewHolder.editButton != null) {
+            viewHolder.editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+
+                    long time = project.createTime;
+                    String text = project.projectName;
+                    long color = project.color;
+
+                    intent.putExtra(WillpowerContact.ProjectEntry.COLUMN_CREATE_TIME, time);
+                    intent.putExtra(WillpowerContact.ProjectEntry.COLUMN_PROJECT_NAME, text);
+                    intent.putExtra(WillpowerContact.ProjectEntry.COLUMN_COLOR,color);
+                    intent.setClass(mContext, ProjectSettingsActivity.class);
+
+                    mContext.startActivity(intent);
+                }
+            });
+        }
     }
 
 
@@ -127,6 +154,7 @@ public class ProjectItemAdapter extends CursorRecyclerViewAdapter<ProjectItemAda
         RecyclerView mChildRecyclerView;
         CardView projectCardView;
         boolean trigger;
+        AppCompatImageButton editButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -134,7 +162,10 @@ public class ProjectItemAdapter extends CursorRecyclerViewAdapter<ProjectItemAda
             title2 = (TextView) itemView.findViewById(R.id.card_text2);
             mChildRecyclerView = (RecyclerView) itemView.findViewById(R.id.recycler_view_card);
             projectCardView = (CardView) itemView.findViewById(R.id.project_card_view);
+
+            editButton = (AppCompatImageButton) itemView.findViewById(R.id.edit_button);
             itemView.setOnClickListener(this);
+
         }
 
         @Override
