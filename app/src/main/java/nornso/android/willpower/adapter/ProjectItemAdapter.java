@@ -16,14 +16,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-import java.util.TimeZone;
 
-import nornso.android.willpower.ManageActivity;
 import nornso.android.willpower.ProjectSettingsActivity;
 import nornso.android.willpower.R;
+import nornso.android.willpower.TaskSettingsActivity;
 import nornso.android.willpower.data.WillpowerContact;
 import nornso.android.willpower.utils.Utils;
 
@@ -129,6 +127,19 @@ public class ProjectItemAdapter extends CursorRecyclerViewAdapter<ProjectItemAda
                 }
             });
         }
+
+        if (viewHolder.addTaskButton != null) {
+            viewHolder.addTaskButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setClass(mContext, TaskSettingsActivity.class);
+
+                    mContext.startActivity(intent);
+                }
+            });
+
+        }
     }
 
 
@@ -155,6 +166,7 @@ public class ProjectItemAdapter extends CursorRecyclerViewAdapter<ProjectItemAda
         CardView projectCardView;
         boolean trigger;
         AppCompatImageButton editButton;
+        AppCompatImageButton addTaskButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -163,7 +175,9 @@ public class ProjectItemAdapter extends CursorRecyclerViewAdapter<ProjectItemAda
             mChildRecyclerView = (RecyclerView) itemView.findViewById(R.id.recycler_view_card);
             projectCardView = (CardView) itemView.findViewById(R.id.project_card_view);
 
+
             editButton = (AppCompatImageButton) itemView.findViewById(R.id.edit_button);
+            addTaskButton = (AppCompatImageButton) itemView.findViewById(R.id.add_task_button);
             itemView.setOnClickListener(this);
 
         }

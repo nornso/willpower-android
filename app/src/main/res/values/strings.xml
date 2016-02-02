@@ -15,7 +15,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_project_settings">主题设置</string>
-
+    <string name="title_activity_task_settings">任务设置</string>
     <string name="color_picker_default_title">"选择颜色"</string>
 
     <string name="color_swatch_description">

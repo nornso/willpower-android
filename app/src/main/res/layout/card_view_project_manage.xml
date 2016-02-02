@@ -51,6 +51,16 @@
             android:background="@drawable/ic_mode_edit_24dp"
             android:clickable="true" />
 
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/add_task_button"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="23dp"
+            android:layout_toLeftOf="@id/edit_button"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_add_24dp"
+            android:clickable="true" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_card"
             android:layout_width="match_parent"

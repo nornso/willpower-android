@@ -55,7 +55,7 @@ public class ProjectSettingsActivity extends AppCompatActivity
     private CircleView mCircleColorView;
     private RecyclerView mRecyclerView;
 
-    private Loader mCursorLoader = null;
+    private Loader mCursorLoader;
 
     private AlarmItemAdapter mAdapter;
     private ActionMenuView mSaveMenuItem;
@@ -144,7 +144,7 @@ public class ProjectSettingsActivity extends AppCompatActivity
         setSupportActionBar(mToolBar);
         mToolBar.setTitle(R.string.title_activity_project_settings);
         mToolBar.setNavigationIcon(R.drawable.ic_close_24dp);
-        mSaveMenuItem = (ActionMenuView) findViewById(R.id.ic_confirm);
+        mSaveMenuItem = (ActionMenuView) findViewById(R.id.ic_project_confirm);
         mSaveMenuItem.setOnMenuItemClickListener(this);
         initNotSaveMenu();
     }

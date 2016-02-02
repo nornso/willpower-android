@@ -21,39 +21,12 @@
             app:theme="@style/MainActionBar">
 
             <android.support.v7.widget.ActionMenuView
-                android:id="@+id/ic_confirm"
+                android:id="@+id/ic_project_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:clickable="false" />
 
-
-            <!--<ImageButton-->
-            <!--android:id="@+id/ic_cancel"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_vertical"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@android:color/transparent"-->
-            <!--android:src="@drawable/ic_close_24dp" />-->
-
-            <!--<TextView-->
-
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="36dp"-->
-            <!--android:text="主题设置"-->
-            <!--android:textColor="@color/colorWhite"-->
-            <!--android:textSize="20sp" />-->
-
-            <!--<ImageButton-->
-            <!--android:id="@+id/ic_confirm"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="right|center_vertical"-->
-            <!--android:layout_marginRight="16dp"-->
-            <!--android:background="@android:color/transparent"-->
-            <!--android:src="@drawable/ic_check_24dp" />-->
 
         </android.support.v7.widget.Toolbar>
 
